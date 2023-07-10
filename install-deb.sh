@@ -475,6 +475,7 @@ sleep 30
 
 clear
 
+sudo apt install snapd
 #FQDN Setup
 read -p "Do you want to setup a FQDN? y or n \n" response
 if [[ $response =~ ^[Yy]$ ]]; then
@@ -536,36 +537,6 @@ echo "SSL Configuration: Hit enter (x3) to accept the defaults:"
 read -p "State (for cert generation). Default [state] :" state
 read -p "City (for cert generation). Default [city]:" city
 read -p "Organizational Unit (for cert generation). Default [org_unit]:" orgunit
-
-# define the input file path
-CERTMETAPATH="/opt/tak/certs/cert-metadata.sh"
-
-if [ -z "$state" ];
-then
-	# Default state to "STATE"
-	sed -i 's/\${STATE}/\${STATE:-STATE}/g' "$CERTMETAPATH"
-else
-	# Set new defualt from user entry
-	sed -i 's/\${STATE}/\${STATE:-$state}/g' "$CERTMETAPATH"
-fi
-
-if [ -z "$city" ];
-then
-	# Default city to "CITY"
-	sed -i 's/\${CITY}/\${CITY:-CITY}/g' "$CERTMETAPATH"
-else
-	# Set new defualt from user entry
-	sed -i 's/\${CITY}/\${CITY:-$city}/g' "$CERTMETAPATH"
-fi
-
-if [ -z "$orgunit" ];
-then
-	# Default org unit to "ORG_UNIT"
-	sed -i 's/\${ORGANIZATIONAL_UNIT}/\${ORGANIZATIONAL_UNIT:-ORG_UNIT}/g' "$CERTMETAPATH"
-else
-	# Default org unit to "ORG_UNIT"
-	sed -i 's/\${ORGANIZATIONAL_UNIT}/\${ORGANIZATIONAL_UNIT:-$orgunit}/g' "$CERTMETAPATH"
-fi
 
 # Update local env if the above file edits dont work - bunch of people reporting issues here
 export STATE=$state
