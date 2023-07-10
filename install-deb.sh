@@ -531,20 +531,6 @@ fi
 
 clear
 
-#Need to build CoreConfig.xml and put it into /opt/tak/CoreConfig.xml so next script uses it to make certs
-echo "SSL Configuration: Hit enter (x3) to accept the defaults:"
-
-read -p "State (for cert generation). Default [state] :" state
-read -p "City (for cert generation). Default [city]:" city
-read -p "Organizational Unit (for cert generation). Default [org_unit]:" orgunit
-
-# Update local env if the above file edits dont work - bunch of people reporting issues here
-export STATE=$state
-export CITY=$city
-export ORGANIZATIONAL_UNIT=$orgunit
-
-clear
-
 #some people are getting errors here, adding more error trapping
 if [ -d "/opt/tak/certs" ] && [ -x "/opt/tak/certs/makeRootCa.sh" ]; then
     echo ""
