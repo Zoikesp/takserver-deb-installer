@@ -31,16 +31,16 @@ else
 fi
 
 #import postgres repo
-curl -fSsL https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor | sudo tee /usr/share/keyrings/postgresql.gpg > /dev/null
+curl -L https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor | sudo tee /usr/share/keyrings/postgresql-archive-keyring.gpg >/dev/null
 
 #import stable build
 #20.04
-echo deb [arch=amd64,arm64,ppc64el signed-by=/usr/share/keyrings/postgresql.gpg] http://apt.postgresql.org/pub/repos/apt/ focal-pgdg main | sudo tee -a /etc/apt/sources.list.d/postgresql.list
+echo "deb [arch=arm64 signed-by=/usr/share/keyrings/postgresql-archive-keyring.gpg] http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" | sudo tee  /etc/apt/sources.list.d/postgresql.list
 
 sudo apt-get update -y
 
 #Install Deps
-sudo apt-get install postgresql-client-15 postgresql-15 postgresql-15-postgis-3 unzip zip wget git nano qrencode openssl net-tools dirmngr ca-certificates software-properties-common gnupg gnupg2 apt-transport-https curl openjdk-11-jdk -y
+sudo apt-get install postgresql postgresql-contrib unzip zip wget git nano qrencode openssl net-tools dirmngr ca-certificates software-properties-common gnupg gnupg2 apt-transport-https curl openjdk-11-jdk -y
 
 if [ $? -ne 0 ]; then
 	echo "Error installing dependencies...."
@@ -177,7 +177,7 @@ echo "$takuser:$password" | chpasswd
 usermod -aG sudo $takuser
 
 
-
+read -p "Press any key to continue..."
 clear
 
 #FQDN Setup
@@ -594,7 +594,7 @@ do
 	sleep 10 
 	echo  "------------CERTIFICATE GENERATION--------------"
 	echo " YOU ARE LIKELY GOING TO SEE ERRORS FOR java.lang.reflect..... ignore it and let the script finish it will keep retrying until successful"
-	read -p "Press any key to continue..."
+	#read -p "Press any key to continue..."
 	cd /opt/tak/certs && sudo ./makeRootCa.sh --ca-name takserver-CA
 	if [ $? -eq 0 ];
 	then
