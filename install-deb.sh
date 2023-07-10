@@ -1,3 +1,4 @@
+#!/bin/bash
 echo ""
 echo ""
 echo "This script will install the necessary dependancies for TAK Server and complete the install using the .deb package"
