@@ -15,7 +15,7 @@ version=$(lsb_release -rs)
 # Check if the version is 20.04
 if [ "$version" != "20.04" ]; then
   echo "Error: This script requires Ubuntu 20.04"
-  exit 1
+  #exit 1
 fi
 
 # Get important vals
